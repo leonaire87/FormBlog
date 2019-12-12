@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>Form Blog</title>
+    <!--needed for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+
+    <!--CSS-->
+    <link rel="stylesheet" th:href="@{CSS/main.css}">
+    <link rel="stylesheet" href="css/bootstrap-reboot.css">
+
+    <!-- needed for bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+
+
+</head>
+<body class="alles">
+    <nav>
+   <h1>FormBlog</h1>
+    </nav>
+
+<div class="rondform">
+<form th:action="@{~/index}" method="post" th:object="${nieuwePosts}">
+    <div>
+        <label for="username" th:text="#{col_username}" class="form-group"></label>
+        <div id="user">
+        <input type="text" class="form-control" th:field="*{username}" id="username" th:placeholder="#{placeholder1}">
+        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></span>
+        </div>
+    </div>
+    <div class="invoer">
+        <label for="posts" th:text="#{col_posts}" class="form-group" ></label>
+        <div id="text">
+        <textarea  class="form-control"  rows="5" th:field="*{posts}" id="posts" th:placeholder="#{placeholder2}"></textarea>
+        <span th:if="${#fields.hasErrors('posts')}" th:errors="*{posts}" class="error"></span>
+        </div>
+<div id="sub-knop">
+        <input type="submit" th:value="#{submit}"  class="btn btn-info submitbtn" >
+    </div>
+    </div>
+
+
+
+    <div th:each="user : ${allePosts}">
+       <div class="blogpost" >
+           <p th:text="${user.username}"></p>
+        <p th:text="${user.posts}"></p>
+        <p th:text="${user.datum}"></p>
+       </div>
+
+          <div id="del-knop">
+              <p><a th:href="@{~/delete/{id}(id=${user.id})}" th:text="#{delete}" class="btn btn-danger" onclick="return confirm('zeker?')"></a></p>
+          </div>
+    </div>
+
+
+    </form>
+</div>
+
+
+
+
+
+
+</body>
+</html>
